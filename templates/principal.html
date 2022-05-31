@@ -16,12 +16,55 @@
 </head>
 
 <body>
+    <br>
+    <h1><center>REGISTROS POR CASOS COVID</center></h1>
+    <br>
+
+    <!--lista actual de clientes-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <br>
+
+        <tbody>
+            <!--Ciclo for para acceder a la lista de tareas-->
+            {% for registroCovid in registro_covid %}
+
+            <tr>
+                <!--Mostrar la descripcion de la tarea-->
+                <th>{{registroCovid.tarea}}</th>
+                <!--Mostrar correo de la tarea-->
+                <th>{{registroCovid.telefono}}</th>
+                <!--Mostrar prioridad de la tarea-->
+                <th>{{registroCovid.estado}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+    <!--Mensaje de registro exitoso-->
+    {% for message in get_flashed_messages() %}
+    <h6 class="text-center text-warning">{{ message }}</h6>
+    {% endfor %}
+    <br>
+
+    <!--Botón para borrar los regisros-->
+    <form action="{{url_for('borrar')}}" method="post" class="card-body">
+        <button type="submit" class="btn btn-outline-warning">Borrar registros</button>
+    </form>
+    <br>
 
     <br>
     <h1><center>CLIENTE</center></h1>
 
     <!--Primer controlador, redirige a la pagina principal-->
-    <form method="post" action="{{url_for('enviar')}}">
+    <form method="post" action="{{url_for('registrar_cuenta')}}">
         <div class="form-group">
             <label><b>Ingrese su nombre:</b></label>
             <input type="text" class="form-control" placeholder="" name="nombre">
@@ -32,51 +75,50 @@
         </div>
         <div class="form-group">
             <label><b>Estado:</b></label>
-            <select class="form-control" name="prioridad">
+            <select class="form-control" name="estado">
                 <option value="1">Normal</option>
                 <option value="2">Caso</option>
                 <option value="3">Cercano</option>
             </select>
         </div>
         <br>
-        <input type="submit" class="btn btn-outline-success">
-        <button type="button" class="btn btn-primary">Registrar cuenta en el sistema</button>
+        <button type="submit" class="btn btn-primary">Registrar cuenta en el sistema</button>
         <button type="button" class="btn btn-primary">Iniciar sesión</button>
         <button type="button" class="btn btn-primary">Registarse en una tienda</button>
         <button type="button" class="btn btn-primary">Ver historial de tiendas</button>
         <button type="button" class="btn btn-primary">Ver estado</button>
     </form>
     <br> 
-    <!--Primer controlador, redirige a la pagina principal-->
+    <h1><center>TIENDA</center></h1>
+    <!--Segundo controlador, redirige a la pagina principal-->
     <form method="post" action="{{url_for('enviar')}}">
         <div class="form-group">
-            <label><b>Ingrese su nombre:</b></label>
+            <label><b>Nombre de la tienda:</b></label>
             <input type="text" class="form-control" placeholder="" name="nombre">
         </div>
         <div class="form-group">
-            <label><b>Registre su teléfono:</b></label>
+            <label><b>Teléfono</b></label>
             <input type="text" class="form-control" placeholder="09 99 999999" name="telefono">
         </div>
         <div class="form-group">
             <label><b>Estado:</b></label>
-            <select class="form-control" name="prioridad">
+            <select class="form-control" name="estado">
                 <option value="1">Normal</option>
                 <option value="2">Caso</option>
-                <option value="3">Cercano</option>
             </select>
         </div>
+        <div class="form-group">
+            <label><b>Gerente:</b></label>
+            <input type="text" class="form-control" placeholder="" name="gerente">
+        </div>
         <br>
-        <input type="submit" class="btn btn-outline-success">
-        <button type="button" class="btn btn-primary">Registrar cuenta en el sistema</button>
-        <button type="button" class="btn btn-primary">Iniciar sesión</button>
-        <button type="button" class="btn btn-primary">Registarse en una tienda</button>
-        <button type="button" class="btn btn-primary">Ver historial de tiendas</button>
-        <button type="button" class="btn btn-primary">Ver estado</button>
     </form>
 
-
-
-    
+    <h1><center>ADMINISTRADOR</center></h1>
+    <!--Segundo controlador, redirige a la pagina principal-->
+    <button type="button" class="btn btn-primary">Ver detalles de clientes</button>
+    <button type="button" class="btn btn-primary">Ver detalles de tiendas</button>
+    <button type="button" class="btn btn-primary">Historial de visitas</button> 
 </body>
 
 </html>

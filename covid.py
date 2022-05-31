@@ -16,7 +16,26 @@ def principal():
     return render_template('principal.html', registro_covid=registro_covid)
 
 
-#Segundo controlador: envío de un nuevo elemento
+#Controlador: registro de cuenta
+@app.route('/registrar_cuenta', methods=['POST'])
+def registrar_cuenta():
+    if request.method == 'POST':
+        
+        #Campos a llenar
+        nombre = request.form['nombre']
+        telefono = request.form['telefono']
+        estado = request.form['estado']
+
+        #Validación para que los campos no sean nulos
+        if nombre == '' or telefono == '':
+            flash('LLenar todos los campos')
+            return redirect(url_for('principal'))
+        
+        else:
+            flash('Cuenta registrada exitosamente!')
+            registro_covid.append({'nombre': nombre, 'telefono': telefono, 'estado': estado})
+            return redirect(url_for('principal'))
+        
 @app.route('/enviar', methods=['POST'])
 def enviar():
     if request.method == 'POST':
@@ -35,7 +54,22 @@ def enviar():
             flash('Cuenta registrada exitosamente!')
             registro_covid.append({'nombre': nombre, 'telefono': telefono, 'estado': estado})
             return redirect(url_for('principal'))
+
+
+#Controlador: Limpiar los registros
+@app.route('/borrar', methods=['POST'])
+def borrar():
+    if request.method == 'POST':
         
+        #Verificación de la lista de tareas
+        if registro_covid == []:
+            flash('Registros vacios')
+            return redirect(url_for('principal'))
+
+        else:
+            registro_covid.clear()
+            flash('Registros vacios')
+            return redirect(url_for('principal'))
 
 #Método para correr la aplicación
 if __name__ == '__main__':
